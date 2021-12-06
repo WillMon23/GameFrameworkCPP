@@ -36,8 +36,6 @@ public:
     /// the scene is null</returns>
     static int addScene(Scene* scene);
 
-    static void addActorToDeletionList(Actor* actor);
-
     /// <summary>
     /// Finds the instance of the scene given that inside of the array
     /// and removes it
@@ -74,8 +72,6 @@ public:
     /// <param name="actor">The actor that will be deleted.</param>
     static void destroy(Actor* actor);
 
-    void destroyActorsInList();
-
     /// <summary>
     /// Ends the application and closes the window.
     /// </summary>
@@ -99,7 +95,9 @@ public:
     /// </summary>
     void run();
 
-private:
+private: 
+    static void addActorToDeletionList(Actor* actor);
+    void destroyActorsInList();
     void start();
     void update(float delaTime);
     void draw();
@@ -107,10 +105,10 @@ private:
 
 private:
     Camera2D* m_camera;
+    static ActorArray m_actorsToDelete;
     static bool m_applicationShouldClose;
     static Scene** m_scenes;
     static int m_sceneCount;
-    static ActorArray m_actorsToDelete;
     static int m_currentSceneIndex;
     static const int m_screenWidth = 700;
     static const int m_screenHeight = 800;
