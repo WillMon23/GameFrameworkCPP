@@ -1,6 +1,7 @@
 #pragma once
 class Transform2D;
 class Collider;
+class Component;
 
 class Actor
 {
@@ -76,11 +77,35 @@ public:
     /// <param name="other">The actor this actor collided with.</param>
     virtual void onCollision(Actor* other);
 
-    virtual Component addComponent(Component** component);
+    /// <summary>
+    /// adds a component to the list of componets for the actor
+    /// </summary>
+    /// <param name="component">the component being added to the list of comonents</param>
+    /// <returns>returns that component</returns>
+    Component* addComponent(Component* component);
 
-    virtual bool removeComponent(Component** component);
+    /// <summary>
+    /// Removes the component associated with with m_components  
+    /// in the argument 
+    /// </summary>
+    /// <param name="component">component being removed from m_components</param>
+    /// <returns>if removed it'll return true</returns>
+    bool removeComponent(Component* component);
 
-    virtual bool removeComponent(const char** charactor);
+    /// <summary>
+    /// Removes the component associated with it's m_name  
+    /// in the argument 
+    /// </summary>
+    /// <param name="component">component being removed from m_components</param>
+    /// <returns>if removed it'll return true</returns>
+    bool removeComponent(const char* charactor);
+
+    /// <summary>
+    /// Gets the component based on the character associated with it
+    /// </summary>
+    /// <param name="Name associated with the component"></param>
+    /// <returns>returns that component in m_component</returns>
+    Component* getComponent(const char* character);
 
 
 protected:
@@ -90,7 +115,7 @@ private:
     bool m_started;
     Transform2D* m_transform;
     Collider* m_collider;
-    Component** m_component;
+    Component** m_components;
     int m_componentCount;
 };
 
