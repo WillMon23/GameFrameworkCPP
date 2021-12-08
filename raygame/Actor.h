@@ -76,6 +76,13 @@ public:
     /// <param name="other">The actor this actor collided with.</param>
     virtual void onCollision(Actor* other);
 
+    virtual Component addComponent(Component** component);
+
+    virtual bool removeComponent(Component** component);
+
+    virtual bool removeComponent(const char** charactor);
+
+
 protected:
     const char* m_name;
 
@@ -83,5 +90,7 @@ private:
     bool m_started;
     Transform2D* m_transform;
     Collider* m_collider;
+    Component** m_component;
+    int m_componentCount;
 };
 
