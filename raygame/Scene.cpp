@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Transform2D.h"
+#include "MoveComponent.h"
 
 Scene::Scene()
 {

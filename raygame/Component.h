@@ -8,7 +8,7 @@ public:
 	/// <summary>
 	/// Defult contructor 
 	/// </summary>
-	Component() { m_name = '\0'; m_owner = nullptr; };
+	Component() { m_name = nullptr; m_owner = nullptr; };
 	/// <param name="actor">gets the actor associated with the this component</param>
 	/// <param name="name">this component names</param>
 	Component(Actor* actor, const char* name) { m_owner = actor; m_name = name; };

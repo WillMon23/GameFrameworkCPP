@@ -6,7 +6,7 @@
 class MoveComponent : Component
 {
 public: 
-	MoveComponent() :Component::Component() {};
+	MoveComponent();
 	MoveComponent(Actor* owner, const char* name);
 	~MoveComponent();
 
@@ -14,10 +14,12 @@ public:
 	void update(float deltaTime) override;
 	void draw() override;
 
+	MathLibrary::Vector2 getVolocity() { return m_volocity; };
+
 private:
-		MathLibrary::Vector2* m_volocity;
-		MathLibrary::Vector2* m_position;
-		const int* m_maxSpeed;
+		MathLibrary::Vector2 m_volocity;
+		MathLibrary::Vector2 m_position;
+		int m_maxSpeed;
 
 
 };
