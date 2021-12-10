@@ -1,6 +1,7 @@
 #pragma once
 #include "Actor.h"
-class InputComponenet;
+#include "InputComponent.h"
+
 class Player : Actor
 {
 public:
@@ -11,6 +12,6 @@ public:
 	void start() override;
 
 private:
-	i
+	InputComponent* m_inputComp;
 };
 

@@ -1,17 +1,28 @@
 #pragma once
+#include <Vector2.h>
 #include "Component.h"
+#include "raylib.h"
+#include <cmath>
+
 class SpriteComponent : Component
 {
 public :
 	SpriteComponent();
 	~SpriteComponent();
+	SpriteComponent(char path[]);
 
-	void start() override;
-	void update(float deltaTime) override;
+	const int getWidth() { return m_texture.width; };
+	void setWidth(const int width) { m_texture.width = width; };
+	
+	const int getHeight() { return m_texture.height; };
+	void setHeight(const int height) { m_texture.height = height; };
+
 	void draw() override;
-	void end();
 
 private:
+	Texture2D m_texture;
+	Image m_image;
+
 
 };
 

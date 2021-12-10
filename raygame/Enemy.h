@@ -12,6 +12,6 @@ public:
 	void update(float deltaTime) override;
 
 private:
-	
+	MoveComponent* m_moveComp; 
 };
 
