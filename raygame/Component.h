@@ -26,7 +26,7 @@ public:
 	/// Gets the value of the owner associated with this component
 	/// </summary>
 	/// <returns>outputs the vlue of m_owner</returns>
-	Actor* getOwener() { return m_owner; };
+	Actor* getOwner() { return m_owner; };
 	
 	virtual void start();
 	virtual void update(float deltaTime);

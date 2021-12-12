@@ -32,5 +32,5 @@ void MoveComponent::update(float deltaTime)
 
 void MoveComponent::draw()
 {
-	std::cout << "Name: " << getOwener()->getName() << "Position X: " << m_position.x << "Position Y: " << m_position.y;
+	std::cout << "Name: " << getOwner()->getName() << "Position X: " << m_position.x << "Position Y: " << m_position.y;
 }
