@@ -11,6 +11,8 @@ SpriteComponent::SpriteComponent(char path[])
 
 void SpriteComponent::draw()
 {
+	char component = 'M';
+
 	m_owenrTransform = getOwner()->getTransform();
 
 	float widthM00 = m_owenrTransform->getLocalMatrix()->m00;
@@ -26,7 +28,14 @@ void SpriteComponent::draw()
 	m_width = round((int)width.getMagnitude());
 	m_hight = round((int)hight.getMagnitude());
 
-	MathLibrary::Vector2* position = new MathLibrary::Vector2(m_owenrTransform->getLocalMatrix->m02, m_owenrTransform->getLocalMatrix->m12);
+	MathLibrary::Vector2* position;
+
+	
+	if (getOwner()->getComponent(&component) != nullptr)
+		position = getOwner()->getComponent(&component)->getLocation();
+	else
+		position = new MathLibrary::Vector2(m_owenrTransform->getLocalMatrix->m02, m_owenrTransform->getLocalMatrix->m12);
+
 	MathLibrary::Vector2* forward = new MathLibrary::Vector2(m_owenrTransform->getLocalMatrix->m00, m_owenrTransform->getLocalMatrix->m10);
 	MathLibrary::Vector2* up = new MathLibrary::Vector2(m_owenrTransform->getLocalMatrix->m01, m_owenrTransform->getLocalMatrix->m11);
 
@@ -35,7 +44,7 @@ void SpriteComponent::draw()
 
 	float rotation = atan2f(m_owenrTransform->getLocalMatrix()->m10, m_owenrTransform->getLocalMatrix()->m00);
 
-	Vector2* positionVec2 = new Vector2(0)
+	Vector2* positionVec2 = new Vector2(position->x,position->y);
 	
 	DrawTextureEx(m_texture, (rotation * 180 / PI), 1, Color.WHITE);
 }

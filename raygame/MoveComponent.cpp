@@ -1,5 +1,4 @@
 #include "MoveComponent.h"
-#include <Vector2.h>
 #include "Actor.h"
 
 MoveComponent::MoveComponent(Actor* owner, const char* name) :Component::Component(owner, name)
@@ -13,6 +12,7 @@ MoveComponent::~MoveComponent()
 	delete &m_volocity;
 	delete &m_maxSpeed;
 	delete &m_position;
+	
 }
 
 void MoveComponent::start()
@@ -26,11 +26,13 @@ void MoveComponent::update(float deltaTime)
 		m_volocity = m_volocity.getNormalized() * m_maxSpeed * deltaTime;
 
 	m_position = m_position + m_volocity;
+	m_location = &m_position;
 	//m_position = m_position + (m_volocity * m_maxSpeed * deltaTime);
 	
 }
 
 void MoveComponent::draw()
 {
+	
 	std::cout << "Name: " << getOwner()->getName() << "Position X: " << m_position.x << "Position Y: " << m_position.y;
 }

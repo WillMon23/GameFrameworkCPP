@@ -1,5 +1,6 @@
 #pragma once
 class Actor;
+#include "Transform2D.h"
 
 class Component
 {
@@ -27,6 +28,8 @@ public:
 	/// </summary>
 	/// <returns>outputs the vlue of m_owner</returns>
 	Actor* getOwner() { return m_owner; };
+
+	MathLibrary::Vector2 * getLocation() { return m_location; }
 	
 	virtual void start();
 	virtual void update(float deltaTime);
@@ -38,5 +41,8 @@ public:
 private:
 	Actor* m_owner;
 	const char* m_name;
+
+protected:
+	MathLibrary::Vector2 * m_location;
 };
 

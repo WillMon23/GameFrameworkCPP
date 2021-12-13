@@ -3,6 +3,7 @@
 #include "Component.h"
 #include <iostream>
 
+
 class MoveComponent : Component
 {
 public: 
@@ -16,10 +17,12 @@ public:
 
 	MathLibrary::Vector2 getVolocity() { return m_volocity; };
 
+	
+
 private:
-		MathLibrary::Vector2 m_volocity;
-		MathLibrary::Vector2 m_position;
-		int m_maxSpeed;
+	MathLibrary::Vector2 m_volocity;
+	MathLibrary::Vector2 m_position;
+	int m_maxSpeed;
 
 
 };
