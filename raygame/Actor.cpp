@@ -1,8 +1,10 @@
  #include "Actor.h"
 #include "Transform2D.h"
 #include <string.h>
+#include <iostream>
 #include "Collider.h"
 #include "Component.h"
+
 
 Actor::Actor()
 {
@@ -36,7 +38,11 @@ void Actor::onCollision(Actor* other)
 
 Component* Actor::addComponent(Component* component)
 {
-
+    //returs false if there is another implamatation of that component
+    Actor* owner = component->getOwner();
+    if (owner)
+        return nullptr;
+    component->AssignOwner(this);
     
     //Creats a temporary pointer that will temporary hold all the information
     //from from the m_component with a new added size of m_componentCount 
@@ -70,6 +76,8 @@ Component* Actor::addComponent(Component* component)
 
 bool Actor::removeComponent(Component* component)
 {
+    if (!component)
+        return false;
     //checks if a component has been removed from m_components
     bool removed = false;
     //Creats a temporary pointer that will temporary hold all the information
@@ -104,9 +112,10 @@ bool Actor::removeComponent(Component* component)
         m_components = temPtrs;
         //decrament m_componentCOunter
         m_componentCount--;
+        delete component;
     }
     //Delte temPtrs allocated memory
-    delete temPtrs;
+    delete[] temPtrs;
     //returns true if there has been a removed component
     return removed;
 }
@@ -149,17 +158,17 @@ bool Actor::removeComponent(const char* charactor)
         m_componentCount--;
     }
     //Delte temPtrs allocated memory
-    delete temPtrs;
+    delete[] temPtrs;
     //returns true if there has been a removed component
     return removed;
 }
 
-Component* Actor::getComponent(const char* character)
+Component* Actor::getComponent(const char* componentName)
 {
     //for ever component in the current index of m_components...
     for (int i = 0; i < m_componentCount; i++)
         //if that component m_name in that index is the same as the character 
-        if (m_components[i]->getName() == character)
+        if (strcmp(m_components[i]->getName(), componentName) == 0)
             //return that component in that index
             return m_components[i];
     //Other then that return a null pointer

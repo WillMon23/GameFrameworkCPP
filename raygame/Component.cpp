@@ -1,22 +1,9 @@
 #include "Component.h"
 
-
-void Component::start()
+void Component::AssignOwner(Actor* owner)
 {
-}
+	if (getOwner())
+		return;
 
-void Component::update(float deltaTime)
-{
-}
-
-void Component::draw()
-{
-}
-
-void Component::end()
-{
-}
-
-void Component::onCollision(Actor* actor)
-{
+	m_owner = owner;
 }

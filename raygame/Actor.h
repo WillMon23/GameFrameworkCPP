@@ -31,13 +31,20 @@ public:
     /// Sets this actors collider
     /// </summary>
     /// <param name="collider">The new collider to attach to the actor</param>
-    void setCollider(Collider* collider) { m_collider = collider; }
+    void setCollider(Collider* collider) { m_collider = collider; };
 
     /// <summary>
     /// Gets the name of this actor
     /// </summary>
     /// <returns></returns>
-    const char* getName() { return m_name; }
+    const char* getName() { return m_name; };
+
+    /// <summary>
+    /// Sets the value of name to our private variable 
+    /// m_name
+    /// </summary>
+    /// <param name="name"></param>
+    void setName(const char* name) { m_name = name; };
 
     /// <summary>
     /// Called during the first update after an actor is added to a scene.
@@ -101,11 +108,12 @@ public:
     bool removeComponent(const char* charactor);
 
     /// <summary>
-    /// Gets the component based on the character associated with it
+    /// Gets the component based on the character associated with its
+    /// name associated with it
     /// </summary>
     /// <param name="Name associated with the component"></param>
     /// <returns>returns that component in m_component</returns>
-    Component* getComponent(const char* character);
+    Component* getComponent(const char* componentName);
 
 
 protected:
