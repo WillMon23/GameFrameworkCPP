@@ -49,19 +49,17 @@ Component* Actor::addComponent(Component* component)
     Component** temPtrs = new Component * [m_componentCount + 1];
     //for the size of m_componentCount
     for (int i = 0; i < m_componentCount; i++)
-    {
-        //Checks to see if the componet exists within m_components 
-        //If true. . . 
-        if (m_components[i] == component)
-        {
-            //delets temPtrs
-            delete[] temPtrs;
-            //Jumps out of the fucntion
-            return nullptr;
-        }
         //... at the index of temPtrs  set that to be m_component at that same index 
         temPtrs[i] = m_components[i];
-    }
+
+
+    temPtrs[m_componentCount] = component;
+    if (m_componentCount > 1)
+        delete[] m_components;
+    else if (m_componentCount == 1)
+        delete m_components;
+
+    
     //set the new size of temPrts to be the component
     temPtrs[m_componentCount] = component;
     //exchange m_components to be temPtrs
@@ -108,12 +106,14 @@ bool Actor::removeComponent(Component* component)
     // removed is true
     if (removed)
     {
+        delete[] m_components;
         //set m_componeets to be temPtrs
         m_components = temPtrs;
         //decrament m_componentCOunter
         m_componentCount--;
         delete component;
     }
+    else
     //Delte temPtrs allocated memory
     delete[] temPtrs;
     //returns true if there has been a removed component
@@ -159,6 +159,7 @@ bool Actor::removeComponent(const char* name)
     // removed is true
     if (removed)
     {
+        delete[] m_components;
         //set m_componeets to be temPtrs
         m_components = temPtrs;
         //decrament m_componentCOunter
@@ -166,6 +167,7 @@ bool Actor::removeComponent(const char* name)
         //Deletes that componenet
         delete componentDeleted;
     }
+    else 
     //Delte temPtrs allocated memory
     delete[] temPtrs;
     //returns true if there has been a removed component

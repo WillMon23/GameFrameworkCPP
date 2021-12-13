@@ -1,5 +1,6 @@
 #include "SpriteComponent.h"
 #include <raylib.h>
+#include <iostream>
 #include <Vector2.h>
 #include <cmath>
 
@@ -37,9 +38,9 @@ void SpriteComponent::draw()
 
 	//Change the position of the sprite to be in the center of the transfrom
 	position = position - (forward * getWidth() / 2);
-	position = position - (up * getHeight() / 2);
+	position = position - (up.getNormalized() * getHeight() / 2);
 	//Change the position of the sprite to be in the center of the transform 
-	RAYLIB_H::Vector2 rayPos = { position.x,position.y };
+	RAYLIB_H::Vector2 rayPos = { position.x, position.y };
 
 	//ROTATION
 	//Gets the value of the rotation in radians from the owners transfrom

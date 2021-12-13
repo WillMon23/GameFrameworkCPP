@@ -5,7 +5,7 @@
 #include <Matrix3.h>
 
 class Texture2D;
-class SpriteComponent : Component
+class SpriteComponent : public Component
 {
 public :
 
@@ -24,7 +24,7 @@ public :
 
 	void draw() override;
 
-	void update(float deltaTime) override;
+	void update(float deltaTime) override {};
 
 private:
 	int m_width;

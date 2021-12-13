@@ -1,18 +1,9 @@
 #include "MoveComponent.h"
 #include "Actor.h"
 #include "Transform2D.h"
+#include <iostream>
 
 
-MoveComponent::MoveComponent( const char* name) :Component::Component(name)
-{
-	m_maxSpeed = 0;
-}
-
-MoveComponent::~MoveComponent()
-{
-	delete &m_velocity;
-	delete &m_maxSpeed;
-}
 
 void MoveComponent::start()
 {
@@ -31,6 +22,5 @@ void MoveComponent::update(float deltaTime)
 
 void MoveComponent::draw()
 {
-	
 	std::cout << "Name: " << getOwner()->getName() << "Position X: " << m_position.x << "Position Y: " << m_position.y;
 }

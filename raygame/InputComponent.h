@@ -1,23 +1,20 @@
 #pragma once
 #include "Component.h"
+#include "raylib.h"
 #include <Vector2.h>
 
-class Actor;
-
-class InputComponent : Component
+class InputComponent : public Component
 {
 public:
-	InputComponent();
-	~InputComponent();
-	InputComponent(Actor owner, const char* name);
+	~InputComponent() {};
+	InputComponent(const char* name = "InputComponent") : Component::Component(name) {};
 
-	void start() override;
-	void update(float deltaTime) override;
-	void draw() override;
-	void end();
-
-
+	MathLibrary::Vector2  getMoveAxis();
 
 private:
+	RAYLIB_H::KeyboardKey m_space_Key = RAYLIB_H::KeyboardKey::KEY_SPACE;
+	RAYLIB_H::KeyboardKey m_action2Key = RAYLIB_H::KeyboardKey::KEY_P;
+	RAYLIB_H::KeyboardKey m_submitKey = RAYLIB_H::KeyboardKey::KEY_ENTER;
+	RAYLIB_H::KeyboardKey m_cancelKey = RAYLIB_H::KeyboardKey::KEY_BACKSPACE;
 };
 
