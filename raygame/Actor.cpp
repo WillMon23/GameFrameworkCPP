@@ -28,12 +28,12 @@ Actor::Actor(float x, float y, const char* name = "Actor")
 void Actor::start()
 {
     m_started = true;
-    for (int i = 0; i < m_componentCount; i++)
-        m_components[i]->start();
 }
 
 void Actor::onCollision(Actor* other)
 {
+    for (int i = 0; i < m_componentCount; i++)
+        m_components[i]->onCollision(other);
 }
 
 Component* Actor::addComponent(Component* component)
@@ -120,10 +120,14 @@ bool Actor::removeComponent(Component* component)
     return removed;
 }
 
-bool Actor::removeComponent(const char* charactor)
+bool Actor::removeComponent(const char* name)
 {
+    if (!name)
+        return false;
     //checks if a component has been removed from m_components
     bool removed = false;
+    //creats a new pointer for our possibly deleted component
+    Component* componentDeleted = nullptr;
     //Creats a temporary pointer that will temporary hold all the information
     //from from the m_component with a new added size of m_componentCount 
     Component** temPtrs = new Component * [m_componentCount - 1];
@@ -137,7 +141,7 @@ bool Actor::removeComponent(const char* charactor)
             //Just skip and continue the loop from start
             continue;
         //if the component in the index of m_name does not match the the character . . .
-        if (m_components[i]->getName() != charactor)
+        if (strcmp(m_components[i]->getName(), name) == 0)
         {
             //... set that componet in the index of m_components to the index of temPrts
             temPtrs[j] = m_components[i];
@@ -146,8 +150,11 @@ bool Actor::removeComponent(const char* charactor)
         }
         //else. . .
         else
-            //Set removed to be true
+        {  //Set removed to be true
             removed = true;
+            //... sets our deleted componenet to our deleted component 
+            componentDeleted = m_components[i];
+        }
     }
     // removed is true
     if (removed)
@@ -156,6 +163,8 @@ bool Actor::removeComponent(const char* charactor)
         m_components = temPtrs;
         //decrament m_componentCOunter
         m_componentCount--;
+        //Deletes that componenet
+        delete componentDeleted;
     }
     //Delte temPtrs allocated memory
     delete[] temPtrs;
@@ -178,7 +187,12 @@ Component* Actor::getComponent(const char* componentName)
 void Actor::update(float deltaTime)
 {
     for (int i = 0; i < m_componentCount; i++)
+    {
+        if (!m_components[i]->getStarted())
+            m_components[i]->start();
+
         m_components[i]->update(deltaTime);
+    }
 }
 
 void Actor::draw()
@@ -196,9 +210,13 @@ void Actor::end()
 
 void Actor::onDestroy()
 {
+    for (int i = 0; i < m_componentCount; i++)
+        m_components[i]->onDestroy();
+
     //Removes this actor from its parent if it has one
     if (getTransform()->getParent())
         getTransform()->getParent()->removeChild(getTransform());
+
 }
 
 bool Actor::checkForCollision(Actor* other)

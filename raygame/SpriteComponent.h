@@ -1,21 +1,26 @@
 #pragma once
-#include <Vector2.h>
 #include "Component.h"
-#include "raylib.h"
-#include <cmath>
 #include "Actor.h"
 #include "Transform2D.h"
+#include <Matrix3.h>
 
+class Texture2D;
 class SpriteComponent : Component
 {
 public :
-	SpriteComponent();
-	~SpriteComponent();
-	SpriteComponent( char path[]);
 
-	const int getWidth() { return m_texture.width; };
+	/// <param name="texture">sets the sprite image to be this</param>
+	/// <param name="name">name for this componenet</param>
+	SpriteComponent( Texture2D* texture, const char* name = "SpriteComponenet");
+
+	/// <param name="path">path of the texture to load</param>
+	/// <param name="name"></param>
+	SpriteComponent(const char* path, const char* name = "SpriteComponenet");
+	~SpriteComponent() override;
+
+	int getWidth() { return m_width; };
 	
-	const int getHeight() { return m_texture.height; };
+	int getHeight() { return m_height; };
 
 	void draw() override;
 
@@ -23,9 +28,9 @@ public :
 
 private:
 	int m_width;
-	int m_hight;
-	Texture2D m_texture;
-	Transform2D* m_owenrTransform;
+	int m_height;
+
+	Texture2D* m_texture;
 
 
 };

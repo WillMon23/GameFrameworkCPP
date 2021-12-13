@@ -1,34 +1,32 @@
 #include "MoveComponent.h"
 #include "Actor.h"
+#include "Transform2D.h"
 
-MoveComponent::MoveComponent(Actor* owner, const char* name) :Component::Component(owner, name)
+
+MoveComponent::MoveComponent( const char* name) :Component::Component(name)
 {
-	m_position = owner->getTransform()->getLocalPosition();
 	m_maxSpeed = 0;
 }
 
 MoveComponent::~MoveComponent()
 {
-	delete &m_volocity;
+	delete &m_velocity;
 	delete &m_maxSpeed;
-	delete &m_position;
-	
 }
 
 void MoveComponent::start()
 {
-	m_volocity = MathLibrary::Vector2(0, 1);
+	m_velocity = MathLibrary::Vector2(0, 1);
 }
 
 void MoveComponent::update(float deltaTime)
 {
-	if (m_volocity.getMagnitude() > m_maxSpeed)
-		m_volocity = m_volocity.getNormalized() * m_maxSpeed * deltaTime;
+	m_position = getOwner()->getTransform()->getLocalPosition() + getVolocity() * deltaTime;
 
-	m_position = m_position + m_volocity;
-	m_location = &m_position;
-	//m_position = m_position + (m_volocity * m_maxSpeed * deltaTime);
-	
+	if (m_velocity.getMagnitude() > m_maxSpeed)
+		m_velocity = m_velocity.getNormalized() * m_maxSpeed * deltaTime;
+
+	getOwner()->getTransform()->setLocalPosition(m_position);
 }
 
 void MoveComponent::draw()

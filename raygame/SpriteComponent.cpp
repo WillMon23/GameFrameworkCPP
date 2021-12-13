@@ -1,59 +1,50 @@
 #include "SpriteComponent.h"
+#include <raylib.h>
+#include <Vector2.h>
+#include <cmath>
 
-SpriteComponent::SpriteComponent(char path[])
+SpriteComponent::SpriteComponent(Texture2D* texture, const char* name) : Component::Component(name)
 {
-	m_texture = LoadTexture(path);
-
-	m_owenrTransform = getOwner()->getTransform();
-
+	m_texture = texture;
 }
 
+SpriteComponent::SpriteComponent(const char* path, const char* name) : Component::Component(name)
+{
+	m_texture = new Texture2D(RAYLIB_H::LoadTexture(path));
+}
+
+SpriteComponent::~SpriteComponent()
+{
+	RAYLIB_H::UnloadTexture(*m_texture);
+	delete m_texture;
+}
 
 void SpriteComponent::draw()
 {
-	
+	//SCALE
+	//Gets the scale of the globle matrix
+	m_width = getOwner()->getTransform()->getScale().x;
+	m_height = getOwner()->getTransform()->getScale().y;
 
-	m_owenrTransform = getOwner()->getTransform();
+	m_texture->width = m_width;
+	m_texture->height = m_height;
 
-	float widthM00 = m_owenrTransform->getLocalMatrix()->m00;
-	float widthM10 = m_owenrTransform->getLocalMatrix()->m10;
+	//POSITION
+	//Gets the world position of rhe actor
+	MathLibrary::Vector2 up = { getOwner()->getTransform()->getGlobalMatrix()->m01, getOwner()->getTransform()->getGlobalMatrix()->m11 };
+	MathLibrary::Vector2 forward = getOwner()->getTransform()->getForward();
+	MathLibrary::Vector2 position = getOwner()->getTransform()->getWorldPosition();
 
-	MathLibrary::Vector2 width = MathLibrary::Vector2(widthM00, widthM10);
-		
-	float hightM01 = m_owenrTransform->getLocalMatrix()->m01;
-	float hightM11 = m_owenrTransform->getLocalMatrix()->m11;
+	//Change the position of the sprite to be in the center of the transfrom
+	position = position - (forward * getWidth() / 2);
+	position = position - (up * getHeight() / 2);
+	//Change the position of the sprite to be in the center of the transform 
+	RAYLIB_H::Vector2 rayPos = { position.x,position.y };
 
-	MathLibrary::Vector2 hight = MathLibrary::Vector2(hightM01, hightM11);
-
-	m_width = round((int)width.getMagnitude());
-	m_hight = round((int)hight.getMagnitude());
-
-	MathLibrary::Vector2* position;
-
-	
-	if (getOwner()->getComponent("Movement") != nullptr)
-		position = getOwner()->getComponent(&component)->getLocation();
-	else
-		position = new MathLibrary::Vector2(m_owenrTransform->getLocalMatrix()->m02, m_owenrTransform->getLocalMatrix()->m12);
-
-	MathLibrary::Vector2* forward = new MathLibrary::Vector2(m_owenrTransform->getLocalMatrix()->m00, m_owenrTransform->getLocalMatrix()->m10);
-	MathLibrary::Vector2* up = new MathLibrary::Vector2(m_owenrTransform->getLocalMatrix()->m01, m_owenrTransform->getLocalMatrix()->m11);
-
-	position -= forward->normalize() * m_width / 2;
-	position -= up->normalize() * m_hight / 2;
-
-	float rotation = atan2f(m_owenrTransform->getLocalMatrix()->m10, m_owenrTransform->getLocalMatrix()->m00);
-
-	Vector2* positionVec2 = new Vector2(*position->x,*position->y);
-	
-	RAYLIB_H::DrawTextureEx(m_texture, (rotation * 180 / PI), 1, Color.WHITE);
+	//ROTATION
+	//Gets the value of the rotation in radians from the owners transfrom
+	float rotation = atan2f(getOwner()->getTransform()->getGlobalMatrix()->m10, getOwner()->getTransform()->getGlobalMatrix()->m00);
+	//Draws the sprite 
+	RAYLIB_H::DrawTextureEx(*m_texture, rayPos, (float)(rotation * 180.0f / PI), 1, WHITE);
 }
-
-void SpriteComponent::update(float deltaTime)
-{
-	m_texture.height = m_hight;
-	m_texture.width = m_width;
-}
-
-
 

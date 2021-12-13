@@ -13,7 +13,7 @@ public:
 	Component() { m_name = nullptr; m_started = false; };
 	/// <param name="actor">gets the actor associated with the this component</param>
 	/// <param name="name">this component names</param>
-	Component(Actor* actor, const char* name) { m_owner = actor; m_name = name; };
+	Component(const char* name) { m_name = name; };
 	/// <summary>
 	/// Desolves the constroctor in order to preserve memory 
 	/// and prenvent memory leaks
@@ -51,6 +51,8 @@ public:
 	virtual void end();
 
 	virtual void onCollision(Actor* actor);
+
+	virtual void onDestroy();
 
 private:
 	Actor* m_owner;
