@@ -7,7 +7,7 @@
 
 void MoveComponent::start()
 {
-	m_velocity = MathLibrary::Vector2(0, 1);
+	//m_velocity = MathLibrary::Vector2(0, 1);
 }
 
 void MoveComponent::update(float deltaTime)
@@ -22,5 +22,6 @@ void MoveComponent::update(float deltaTime)
 
 void MoveComponent::draw()
 {
-	std::cout << "Name: " << getOwner()->getName() << "Position X: " << m_position.x << "Position Y: " << m_position.y;
+	std::cout << "Name: " << getOwner()->getName() << " X - axis: " << m_position.x << " Y - axis: " << m_position.y << std::endl;
+	
 }

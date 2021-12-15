@@ -15,6 +15,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{a4a6dade-bd05-442d-bb42-57352f3634d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{4ca9fc75-7856-43fc-8bf5-13cc3868ac86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,13 +112,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\player.png">
-      <Filter>Source Files</Filter>
-    </Image>
-    <Image Include="Images\enemy.png">
-      <Filter>Source Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="Images\bullet.png">
-      <Filter>Source Files</Filter>
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="Images\enemy.png">
+      <Filter>Images</Filter>
     </Image>
   </ItemGroup>
 </Project>

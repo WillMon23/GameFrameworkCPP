@@ -65,7 +65,7 @@ Component* Actor::addComponent(Component* component)
     //exchange m_components to be temPtrs
     m_components = temPtrs;
    //once done we delete temPtrs 
-    delete[] temPtrs;
+    //delete[] temPtrs;
     //Incraments components counter by 1
     m_componentCount++;
     //returns the component passed through;  
